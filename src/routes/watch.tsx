@@ -7,7 +7,12 @@ import { INSTANCE } from "../lib/info";
 import { createResource, createSignal } from "solid-js";
 import { Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
-import { IoShare, IoThumbsDown, IoThumbsUp, IoThumbsUpOutline } from "solid-icons/io";
+import {
+	IoShare,
+	IoThumbsDown,
+	IoThumbsUp,
+	IoThumbsUpOutline,
+} from "solid-icons/io";
 import { Separator } from "@kobalte/core/separator";
 
 import { formatNum, formatTimeElapsed } from "../lib/util";
@@ -64,7 +69,9 @@ function VideoInfo(props: {
 					/>
 
 					<div class="flex flex-col">
-						<div class="font-semibold line-clamp-1">{props.author}</div>
+						<div class="font-semibold line-clamp-1">
+							{props.author}
+						</div>
 
 						<div class="text-xs text-black/50">
 							{`${props.subs} subscribers`}
@@ -72,26 +79,45 @@ function VideoInfo(props: {
 					</div>
 				</a>
 
-				<Show when={!subs.loading} fallback={<Button class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8">Subscribe</Button>}>
+				<Show
+					when={!subs.loading}
+					fallback={
+						<Button class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8">
+							Subscribe
+						</Button>
+					}
+				>
 					{(() => {
 						if (subs()![props.authorId]) {
 							return (
 								<Button
-									onClick={async () => { await setSubscribed(props.authorId, false); refetch() }}
+									onClick={async () => {
+										await setSubscribed(
+											props.authorId,
+											false,
+										);
+										refetch();
+									}}
 									class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
 								>
 									Subscribed
 								</Button>
-							)
+							);
 						} else {
 							return (
 								<Button
-									onClick={async () => { await setSubscribed(props.authorId, true); refetch() }}
+									onClick={async () => {
+										await setSubscribed(
+											props.authorId,
+											true,
+										);
+										refetch();
+									}}
 									class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
 								>
 									Subscribe
 								</Button>
-							)
+							);
 						}
 					})()}
 				</Show>
@@ -123,11 +149,13 @@ function VideoInfo(props: {
 				</div>
 
 				<div class="mb-4 flex flex-col">
-					<div class={`${ !showDescription() ? "line-clamp-2" : "" } text-sm`}>
+					<div
+						class={`${!showDescription() ? "line-clamp-2" : ""} text-sm`}
+					>
 						{props.description}
 					</div>
 
-					<Button onClick={() => setShowDescription(t => !t)}>
+					<Button onClick={() => setShowDescription((t) => !t)}>
 						{showDescription() ? "Show less" : "Show more"}
 					</Button>
 				</div>
@@ -198,22 +226,21 @@ function Comment(props: {
 
 	return (
 		<div class="flex flex-row gap-4">
-			<img src={props.avatar} class="rounded-full drop-shadow-md object-cover size-10" />
+			<img
+				src={props.avatar}
+				class="rounded-full drop-shadow-md object-cover size-10"
+			/>
 
 			<div class="flex flex-col gap-1">
 				<div class="flex flex-row gap-4">
-					<div class="text-xs font-semibold">
-						{props.author}
-					</div>
+					<div class="text-xs font-semibold">{props.author}</div>
 
 					<div class="text-xs text-black/50">
 						{formatTimeElapsed(elapsed)}
 					</div>
 				</div>
 
-				<div class="text-sm">
-					{props.content}
-				</div>
+				<div class="text-sm">{props.content}</div>
 
 				<div class="flex flex-row gap-2 items-center text-black/70 text-xs font-semibold">
 					<IoThumbsUpOutline class="text-lg" />
@@ -249,24 +276,28 @@ export default function Watch() {
 
 	const [videoData, { refetch: refetchVideoInfo }] = createResource(
 		() => searchParams.v,
-		() => getVideoInfo(searchParams.v!)
+		() => getVideoInfo(searchParams.v!),
 	);
 
 	const [commentData, { refetch: refetchComments }] = createResource(
 		() => searchParams.v,
-		() => getComments(searchParams.v!)
+		() => getComments(searchParams.v!),
 	);
 
 	const swapVideo = (id: string) => {
 		setSearchParams({ v: id });
 		refetchVideoInfo();
 		refetchComments();
-	}
+	};
 
 	return (
 		<div class="p-8 flex flex-row justify-center gap-2">
 			<div class="flex flex-col w-8/12 max-w-6xl gap-4 h-full rounded-lg">
-				<video class="outline-none rounded-lg bg-black/80 drop-shadow-xl" controls autoplay>
+				<video
+					class="outline-none rounded-lg bg-black/80 drop-shadow-xl"
+					controls
+					autoplay
+				>
 					<source
 						src={`https://${INSTANCE}/latest_version?id=${searchParams.v!}&itag=18`}
 						type="video/mp4"
@@ -343,7 +374,7 @@ export default function Watch() {
 								author={v.author}
 								views={v.viewCountText}
 								thumb={v.videoThumbnails[0].url}
-								url={`/watch?v=${v.videoId}`}
+								url={`/riptire/watch?v=${v.videoId}`}
 								duration={v.lengthSeconds}
 							/>
 						));

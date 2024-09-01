@@ -80,14 +80,19 @@ function Channel(props: {
 		published: number;
 	}[];
 }) {
-	const [subs, { refetch }] = createResource(async () => await getSubscriptions());
+	const [subs, { refetch }] = createResource(
+		async () => await getSubscriptions(),
+	);
 
 	return (
 		<div class="flex flex-col gap-6 px-32 py-4">
 			<img src={props.banner} class="rounded-xl h-48 w-full" />
 
 			<div class="flex flex-row gap-4 w-full">
-				<img src={props.avatar} class="rounded-full size-40 object-cover" />
+				<img
+					src={props.avatar}
+					class="rounded-full size-40 object-cover"
+				/>
 
 				<div class="flex flex-col gap-2 w-5/6">
 					<div class="text-4xl font-bold w-1/3">{props.name}</div>
@@ -102,9 +107,7 @@ function Channel(props: {
 						{props.desc}
 					</div>
 
-					<Show
-						when={!subs.loading}
-					>
+					<Show when={!subs.loading}>
 						{(() => {
 							if (subs()![props.id]) {
 								return (
@@ -125,10 +128,7 @@ function Channel(props: {
 								return (
 									<Button
 										onClick={async () => {
-											await setSubscribed(
-												props.id,
-												true,
-											);
+											await setSubscribed(props.id, true);
 											refetch();
 										}}
 										class="rounded-full w-36 py-3 bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
@@ -146,7 +146,7 @@ function Channel(props: {
 				{props.vids.map((v) => (
 					<VideoMedium
 						title={v.name}
-						url={`/watch?v=${v.id}`}
+						url={`/riptire/watch?v=${v.id}`}
 						thumb={v.thumb}
 						views={v.views}
 						published={v.published}

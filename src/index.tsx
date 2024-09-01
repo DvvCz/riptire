@@ -7,22 +7,10 @@ import "./index.css";
 import Navbar from "./components/Navbar";
 
 function Layout(props: any) {
-	const [navColor] = createStoredSignal(
-		"v1.theme.nav",
-		"#FFFFFF",
-	);
-	const [primColor] = createStoredSignal(
-		"v1.theme.primary",
-		"#FFFFFF",
-	);
-	const [secColor] = createStoredSignal(
-		"v1.theme.secondary",
-		"#000000",
-	);
-	const [terColor] = createStoredSignal(
-		"v1.theme.tertiary",
-		"#737373",
-	);
+	const [navColor] = createStoredSignal("v1.theme.nav", "#FFFFFF");
+	const [primColor] = createStoredSignal("v1.theme.primary", "#FFFFFF");
+	const [secColor] = createStoredSignal("v1.theme.secondary", "#000000");
+	const [terColor] = createStoredSignal("v1.theme.tertiary", "#737373");
 
 	document.documentElement.style.setProperty("--color-nav", navColor());
 	document.documentElement.style.setProperty("--color-primary", primColor());
@@ -30,13 +18,11 @@ function Layout(props: any) {
 	document.documentElement.style.setProperty("--color-tertiary", terColor());
 
 	return (
-		<div
-			class="h-screen overflow-y-scroll"
-		>
+		<div class="h-screen overflow-y-scroll">
 			<Navbar />
 			{props.children}
 		</div>
-	)
+	);
 }
 
 import Home from "./routes/home";
@@ -51,7 +37,7 @@ import { createStoredSignal } from "./lib/store";
 
 render(
 	() => (
-		<Router root={Layout}>
+		<Router base="/riptire/" root={Layout}>
 			<Route path="/" component={Home} />
 			<Route path="/home" component={Home} />
 			<Route path="/trending" component={Trending} />
@@ -63,5 +49,5 @@ render(
 			<Route path="*" component={FourOhFour} />
 		</Router>
 	),
-	document.getElementById("root")!
+	document.getElementById("root")!,
 );

@@ -35,16 +35,16 @@ async function search(mode: (typeof MODES)[number]) {
 
 	console.log(json);
 
-	return json.map(v => (
+	return json.map((v) => (
 		<VideoLarge
 			title={v.title}
 			desc={v.description}
 			published={v.published}
 			author={v.author}
-			authorurl={`/channel/${v.authorId}`}
+			authorurl={`/riptire/channel/${v.authorId}`}
 			views={v.viewCount}
 			thumb={v.videoThumbnails?.[0].url}
-			url={`/watch?v=${v.videoId}`}
+			url={`/riptire/watch?v=${v.videoId}`}
 			duration={v.lengthSeconds}
 		/>
 	));
@@ -79,7 +79,12 @@ export default function Trending() {
 			</div>
 
 			<div class="p-8 px-12 flex w-full flex-col max-w-screen-2xl gap-2">
-				<Show when={!data.loading} fallback={[1,2,3,4,5].map(_ => <VideoLargeSkeleton />)}>
+				<Show
+					when={!data.loading}
+					fallback={[1, 2, 3, 4, 5].map((_) => (
+						<VideoLargeSkeleton />
+					))}
+				>
 					{data()}
 				</Show>
 			</div>
