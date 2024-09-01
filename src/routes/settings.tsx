@@ -143,7 +143,7 @@ export default function Settings() {
 						}
 
 						case "Subscriptions": {
-							const [subs, { refetch }] =
+							const [subs] =
 								createResource(getSubscriptions);
 
 							return (
