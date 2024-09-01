@@ -21,7 +21,7 @@ function Search() {
 	const [value, setValue] = createSignal("");
 
 	const performSearch = () => {
-		window.location.replace(`/search?q=${value()}`);
+		window.location.href = `/riptire/search?q=${value()}`;
 	};
 
 	const keyUp = (e: any) => {
