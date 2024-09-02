@@ -18,7 +18,7 @@ async function search(mode: (typeof MODES)[number]) {
 
 	const res = await fetch(`https://${INSTANCE}/api/v1/trending?type=${m}`);
 	if (!res.ok) {
-		return <div>Failed to load</div>;
+		throw new Error("Uh oh");
 	}
 
 	const json: {
@@ -33,21 +33,7 @@ async function search(mode: (typeof MODES)[number]) {
 		lengthSeconds: number;
 	}[] = await res.json();
 
-	console.log(json);
-
-	return json.map((v) => (
-		<VideoLarge
-			title={v.title}
-			desc={v.description}
-			published={v.published}
-			author={v.author}
-			authorurl={`/channel/${v.authorId}`}
-			views={v.viewCount}
-			thumb={v.videoThumbnails?.[0].url}
-			url={`/watch?v=${v.videoId}`}
-			duration={v.lengthSeconds}
-		/>
-	));
+	return json;
 }
 
 export default function Trending() {
@@ -85,7 +71,19 @@ export default function Trending() {
 						<VideoLargeSkeleton />
 					))}
 				>
-					{data()}
+					{data()!.map(v => (
+						<VideoLarge
+							title={v.title}
+							desc={v.description}
+							published={v.published}
+							author={v.author}
+							authorurl={`/channel/${v.authorId}`}
+							views={v.viewCount}
+							thumb={v.videoThumbnails?.[0].url}
+							url={`/watch?v=${v.videoId}`}
+							duration={v.lengthSeconds}
+						/>
+					))}
 				</Show>
 			</div>
 		</div>
