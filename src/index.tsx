@@ -37,7 +37,7 @@ import { createStoredSignal } from "./lib/store";
 
 render(
 	() => (
-		<HashRouter base="/riptire/" root={Layout}>
+		<HashRouter root={Layout}>
 			<Route path="/" component={Home} />
 			<Route path="/home" component={Home} />
 			<Route path="/trending" component={Trending} />

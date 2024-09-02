@@ -37,7 +37,7 @@ export default function Subscriptions() {
 							thumb={vid.videoThumbnails?.[0].url}
 							views={vid.viewCount}
 							published={vid.published}
-							url={`/riptire/watch?v=${vid.videoId}`}
+							url={`/watch?v=${vid.videoId}`}
 							duration={vid.lengthSeconds}
 							author={vid.author}
 						/>

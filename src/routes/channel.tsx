@@ -146,7 +146,7 @@ function Channel(props: {
 				{props.vids.map((v) => (
 					<VideoMedium
 						title={v.name}
-						url={`/riptire/watch?v=${v.id}`}
+						url={`/watch?v=${v.id}`}
 						thumb={v.thumb}
 						views={v.views}
 						published={v.published}

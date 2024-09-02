@@ -374,7 +374,7 @@ export default function Watch() {
 								author={v.author}
 								views={v.viewCountText}
 								thumb={v.videoThumbnails[0].url}
-								url={`/riptire/watch?v=${v.videoId}`}
+								url={`/watch?v=${v.videoId}`}
 								duration={v.lengthSeconds}
 							/>
 						));

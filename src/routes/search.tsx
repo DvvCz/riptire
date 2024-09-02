@@ -2,7 +2,7 @@ import { createResource, Show } from "solid-js";
 import VideoLarge, {
 	VideoLargeSkeleton,
 } from "../components/videos/VideoLarge";
-import { useSearchParams } from "@solidjs/router";
+import { A, useSearchParams } from "@solidjs/router";
 
 import { formatNum } from "../lib/util";
 import { INSTANCE } from "../lib/info";
@@ -15,7 +15,7 @@ function Channel(props: {
 	url: string;
 }) {
 	return (
-		<a
+		<A
 			href={props.url}
 			class="h-40 w-8/12 flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10"
 		>
@@ -33,7 +33,7 @@ function Channel(props: {
 
 				<div class="text-xs mt-4 flex flex-row gap-2">{props.desc}</div>
 			</div>
-		</a>
+		</A>
 	);
 }
 
@@ -45,7 +45,7 @@ function Playlist(props: {
 	url: string;
 }) {
 	return (
-		<a
+		<A
 			href={props.url}
 			class="h-40 w-8/12 flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10"
 		>
@@ -66,7 +66,7 @@ function Playlist(props: {
 					<span>{`${formatNum(props.vids)} videos`}</span>
 				</div>
 			</div>
-		</a>
+		</A>
 	);
 }
 
@@ -115,11 +115,11 @@ async function search(query: string) {
 					title={v.title}
 					desc={v.description}
 					author={v.author}
-					authorurl={`/riptire/channel/${v.authorId}`}
+					authorurl={`/channel/${v.authorId}`}
 					published={v.published}
 					views={v.viewCount}
 					thumb={v.videoThumbnails?.[0].url}
-					url={`/riptire/watch?v=${v.videoId}`}
+					url={`/watch?v=${v.videoId}`}
 					duration={v.lengthSeconds}
 				/>
 			);
@@ -130,7 +130,7 @@ async function search(query: string) {
 					desc={v.description}
 					subs={v.subCount}
 					avatar={v.authorThumbnails?.[1].url}
-					url={`/riptire/channel/${v.authorId}`}
+					url={`/channel/${v.authorId}`}
 				/>
 			);
 		} else {
@@ -140,7 +140,7 @@ async function search(query: string) {
 					author={v.author}
 					thumb={v.playlistThumbnail}
 					vids={v.videoCount}
-					url={`/riptire/playlists?id=${v.playlistId}`}
+					url={`/playlists?id=${v.playlistId}`}
 				/>
 			);
 		}

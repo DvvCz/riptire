@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import { formatNum, formatTime } from "../../lib/util";
 
 export function VideoSmallSkeleton() {
@@ -28,7 +29,7 @@ export default function VideoSmall(props: {
 	duration: number
 }) {
 	return (
-		<a href={props.url} class="h-24 flex flex-row rounded-lg hover:bg-black/10 gap-2">
+		<A href={props.url} class="h-24 flex flex-row rounded-lg hover:bg-black/10 gap-2">
 			<div
 				style={{"background-image": `url(${props.thumb})`}}
 				class="rounded-lg drop-shadow-2xl w-5/12 max-w-md flex justify-end items-end bg-cover"
@@ -51,6 +52,6 @@ export default function VideoSmall(props: {
 					<span>{`${formatNum(props.views)} views`}</span>
 				</div>
 			</div>
-		</a>
+		</A>
 	);
 }

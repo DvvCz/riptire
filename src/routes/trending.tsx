@@ -41,10 +41,10 @@ async function search(mode: (typeof MODES)[number]) {
 			desc={v.description}
 			published={v.published}
 			author={v.author}
-			authorurl={`/riptire/channel/${v.authorId}`}
+			authorurl={`/channel/${v.authorId}`}
 			views={v.viewCount}
 			thumb={v.videoThumbnails?.[0].url}
-			url={`/riptire/watch?v=${v.videoId}`}
+			url={`/watch?v=${v.videoId}`}
 			duration={v.lengthSeconds}
 		/>
 	));
