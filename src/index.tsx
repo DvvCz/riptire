@@ -1,6 +1,6 @@
 /* @refresh reload */
 import { render } from "solid-js/web";
-import { Route, Router } from "@solidjs/router";
+import { Route, HashRouter } from "@solidjs/router";
 
 import "./index.css";
 
@@ -37,7 +37,7 @@ import { createStoredSignal } from "./lib/store";
 
 render(
 	() => (
-		<Router base="/riptire/" root={Layout}>
+		<HashRouter base="/riptire/" root={Layout}>
 			<Route path="/" component={Home} />
 			<Route path="/home" component={Home} />
 			<Route path="/trending" component={Trending} />
@@ -47,7 +47,7 @@ render(
 			<Route path="/search" component={Search} />
 			<Route path="/channel/:id" component={Channel} />
 			<Route path="*" component={FourOhFour} />
-		</Router>
+		</HashRouter>
 	),
 	document.getElementById("root")!,
 );
