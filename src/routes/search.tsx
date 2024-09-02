@@ -73,7 +73,7 @@ function Playlist(props: {
 async function search(query: string) {
 	const res = await fetch(`https://${INSTANCE}/api/v1/search?q=${query}`);
 	if (!res.ok) {
-		return <div>Failed to load</div>;
+		throw new Error("uh oh");
 	}
 
 	let json: (
@@ -107,44 +107,7 @@ async function search(query: string) {
 		  }
 	)[] = await res.json();
 
-	return json.map((v) => {
-		if (v.type === "video") {
-			console.log(v);
-			return (
-				<VideoLarge
-					title={v.title}
-					desc={v.description}
-					author={v.author}
-					authorurl={`/channel/${v.authorId}`}
-					published={v.published}
-					views={v.viewCount}
-					thumb={v.videoThumbnails?.[0].url}
-					url={`/watch?v=${v.videoId}`}
-					duration={v.lengthSeconds}
-				/>
-			);
-		} else if (v.type === "channel") {
-			return (
-				<Channel
-					name={v.author}
-					desc={v.description}
-					subs={v.subCount}
-					avatar={v.authorThumbnails?.[1].url}
-					url={`/channel/${v.authorId}`}
-				/>
-			);
-		} else {
-			return (
-				<Playlist
-					title={v.title}
-					author={v.author}
-					thumb={v.playlistThumbnail}
-					vids={v.videoCount}
-					url={`/playlists?id=${v.playlistId}`}
-				/>
-			);
-		}
-	});
+	return json;
 }
 
 export default function Search() {
@@ -160,7 +123,43 @@ export default function Search() {
 						<VideoLargeSkeleton />
 					))}
 				>
-					{data()}
+					{data()!.map(v => {
+						if (v.type === "video") {
+							return (
+								<VideoLarge
+									title={v.title}
+									desc={v.description}
+									author={v.author}
+									authorurl={`/channel/${v.authorId}`}
+									published={v.published}
+									views={v.viewCount}
+									thumb={v.videoThumbnails?.[0].url}
+									url={`/watch?v=${v.videoId}`}
+									duration={v.lengthSeconds}
+								/>
+							);
+						} else if (v.type === "channel") {
+							return (
+								<Channel
+									name={v.author}
+									desc={v.description}
+									subs={v.subCount}
+									avatar={v.authorThumbnails?.[1].url}
+									url={`/channel/${v.authorId}`}
+								/>
+							);
+						} else {
+							return (
+								<Playlist
+									title={v.title}
+									author={v.author}
+									thumb={v.playlistThumbnail}
+									vids={v.videoCount}
+									url={`/playlists?id=${v.playlistId}`}
+								/>
+							);
+						}
+					})}
 				</Show>
 			</div>
 		</div>
