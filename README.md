@@ -13,3 +13,13 @@ Riptire aims to bring both of these together, to make the switch off YouTube pai
 This isn't some electron wrapper either, which ends up using even more RAM than youtube.
 
 *This project is not affiliated with Invidious nor YouTube.*
+
+# Gallery
+
+![Riptire](assets/home.png)
+
+![Riptire](assets/trending.png)
+
+![Riptire](assets/subscriptions.png)
+
+![Riptire](assets/watch.png)
