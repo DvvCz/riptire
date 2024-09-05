@@ -4,16 +4,13 @@ import { createStoredSignal } from "../lib/store";
 import { getSubscriptions } from "../lib/subs";
 import { Button } from "@kobalte/core/button";
 
-<<<<<<< Updated upstream
 const SECTIONS = [
 	"Appearance",
 	"Performance",
 	"Subscriptions",
 	"Permissions",
+	"Invidious"
 ] as const;
-=======
-const SECTIONS = ["Appearance", "Performance", "Subscriptions", "Permissions", "Invidious"] as const;
->>>>>>> Stashed changes
 
 export default function Settings() {
 	const [section, setSection] =
@@ -248,6 +245,12 @@ export default function Settings() {
 						case "Permissions": {
 							// "Family Friendly" lock w/ isFamilyFriendly
 							// Disable comments
+							return "tbd";
+						}
+						
+						case "Invidious": {
+							// Switch Instance
+							// Distribute work across random instances for privacy & performance
 							return "tbd";
 						}
 					}
