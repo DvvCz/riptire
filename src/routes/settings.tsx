@@ -4,12 +4,16 @@ import { createStoredSignal } from "../lib/store";
 import { getSubscriptions } from "../lib/subs";
 import { Button } from "@kobalte/core/button";
 
+<<<<<<< Updated upstream
 const SECTIONS = [
 	"Appearance",
 	"Performance",
 	"Subscriptions",
 	"Permissions",
 ] as const;
+=======
+const SECTIONS = ["Appearance", "Performance", "Subscriptions", "Permissions", "Invidious"] as const;
+>>>>>>> Stashed changes
 
 export default function Settings() {
 	const [section, setSection] =

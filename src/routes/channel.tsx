@@ -86,12 +86,12 @@ function Channel(props: {
 
 	return (
 		<div class="flex flex-col gap-6 px-32 py-4">
-			<img src={props.banner} class="rounded-xl h-48 w-full" />
+			<img src={props.banner} class="rounded-xl drop-shadow-lg h-48 w-full" />
 
 			<div class="flex flex-row gap-4 w-full">
 				<img
 					src={props.avatar}
-					class="rounded-full size-40 object-cover"
+					class="rounded-full size-40 drop-shadow-md object-cover"
 				/>
 
 				<div class="flex flex-col gap-2 w-5/6">
