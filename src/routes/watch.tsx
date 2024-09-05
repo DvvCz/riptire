@@ -1,4 +1,4 @@
-import { useSearchParams } from "@solidjs/router";
+import { A, useSearchParams } from "@solidjs/router";
 import VideoSmall, {
 	VideoSmallSkeleton,
 } from "../components/videos/VideoSmall";
@@ -59,7 +59,7 @@ function VideoInfo(props: {
 			<div class="font-bold text-lg line-clamp-1">{props.title}</div>
 
 			<div class="flex flex-row gap-4">
-				<a
+				<A
 					href={props.authorUrl}
 					class="flex flex-row gap-2 w-1/4 rounded-full h-1/3"
 				>
@@ -77,53 +77,25 @@ function VideoInfo(props: {
 							{`${props.subs} subscribers`}
 						</div>
 					</div>
-				</a>
+				</A>
 
-				<Show
-					when={!subs.loading}
-					fallback={
-						<Button class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8">
-							Subscribe
-						</Button>
-					}
+				<Button
+					onClick={async () => {
+						await setSubscribed(
+							props.authorId,
+							!(await getSubscriptions())[props.authorId],
+						);
+						refetch();
+					}}
+					class="rounded-full text-center bg-tertiary hover:bg-tertiary/90 text-white px-8"
 				>
-					{(() => {
-						if (subs()![props.authorId]) {
-							return (
-								<Button
-									onClick={async () => {
-										await setSubscribed(
-											props.authorId,
-											false,
-										);
-										refetch();
-									}}
-									class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
-								>
-									Subscribed
-								</Button>
-							);
-						} else {
-							return (
-								<Button
-									onClick={async () => {
-										await setSubscribed(
-											props.authorId,
-											true,
-										);
-										refetch();
-									}}
-									class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
-								>
-									Subscribe
-								</Button>
-							);
-						}
-					})()}
-				</Show>
+					<Show when={!subs.loading} fallback={"Subscribe"}>
+						{subs()![props.authorId] ? "Subscribe" : "Subscribed"}
+					</Show>
+				</Button>
 
-				<div class="ml-24 flex flex-row items-center rounded-full bg-tertiary text-white font-semibold">
-					<Button class="rounded-l-full h-full items-center flex flex-row gap-4 px-4 hover:bg-tertiary/90">
+				<div class="ml-24 flex flex-row items-center rounded-full text-white font-semibold">
+					<Button class="rounded-l-full h-full items-center flex flex-row gap-4 px-4 bg-tertiary hover:bg-tertiary/90">
 						<IoThumbsUp class="text-xl" /> {formatNum(props.likes)}
 					</Button>
 					{/* todo: due to a ?bug?, separator has a white pixel at the top. so can't be any other color. */}
@@ -131,18 +103,18 @@ function VideoInfo(props: {
 						class="bg-white h-2/3 w-px"
 						orientation="vertical"
 					/>
-					<Button class="rounded-r-full flex h-full items-center px-4 hover:bg-tertiary/90">
+					<Button class="rounded-r-full flex h-full items-center px-4 bg-tertiary hover:bg-tertiary/90">
 						<IoThumbsDown class="text-xl" />
 					</Button>
 				</div>
 
-				<Button class="rounded-full flex flex-row justify-center items-center gap-2 bg-neutral-800 transition-all duration-75 hover:bg-neutral-800/90 text-white px-4">
+				<Button class="rounded-full flex flex-row justify-center items-center gap-2 bg-tertiary hover:bg-tertiary/90 transition-all duration-75 text-white px-4">
 					<IoShare class="text-xl" />
 					Share
 				</Button>
 			</div>
 
-			<div class="mt-4 rounded-xl drop-shadow-xl bg-secondary/10 w-full p-2">
+			<div class="mt-4 rounded-xl drop-shadow-xl bg-secondary/10 w-full min-h-24 p-2">
 				<div class="flex flex-row items-center gap-4 text-base font-medium">
 					<span>{`${fmt.format(props.views)} views`}</span>
 					<span>{props.published}</span>
@@ -155,9 +127,14 @@ function VideoInfo(props: {
 						{props.description}
 					</div>
 
-					<Button onClick={() => setShowDescription((t) => !t)}>
-						{showDescription() ? "Show less" : "Show more"}
-					</Button>
+					<Show when={props.description.length > 200}>
+						<Button
+							class="mt-2"
+							onClick={() => setShowDescription((t) => !t)}
+						>
+							{showDescription() ? "Show less" : "Show more"}
+						</Button>
+					</Show>
 				</div>
 			</div>
 		</div>
@@ -358,7 +335,7 @@ export default function Watch() {
 				</div>
 			</div>
 
-			<div class="rounded-lg w-4/12 max-w-3xl flex flex-col gap-2 p-8">
+			<div class="rounded-lg w-4/12 min-w-96 max-w-xl flex flex-col gap-1 px-8">
 				<Show
 					when={!videoData.loading}
 					fallback={[1, 2, 3, 4, 5, 6].map(() => (

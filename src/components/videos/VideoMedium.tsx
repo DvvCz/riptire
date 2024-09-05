@@ -14,7 +14,7 @@ export function VideoMediumSkeleton() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
 
 export function VideoMedium(props: {
@@ -36,7 +36,11 @@ export function VideoMedium(props: {
 					{formatTime(props.duration)}
 				</div>
 
-				<img src={props.thumb} class="bg-black rounded-xl h-32 object-cover" />
+				<img
+					src={props.thumb}
+					class="bg-black rounded-xl h-32 object-cover"
+					loading="lazy"
+				/>
 			</div>
 
 			<div class="flex flex-col gap-1 pb-4">
@@ -50,7 +54,7 @@ export function VideoMedium(props: {
 							<div class="text-sm text-black/80">
 								{props.author}
 							</div>
-						)
+						);
 					}
 				})()}
 

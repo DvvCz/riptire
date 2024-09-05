@@ -54,7 +54,7 @@ export default function Trending() {
 										setMode(m);
 										refetch();
 									}}
-									class={`${m === mode() && "border-b-black border-b-2"} hover:border-b-2 transition-all duration-100 border-b-neutral-500 flex items-center h-full px-8`}
+									class={`${m === mode() && "border-b-black border-b-2"} transition-all duration-100 flex items-center h-full px-8`}
 								>
 									{m}
 								</Button>
@@ -71,7 +71,7 @@ export default function Trending() {
 						<VideoLargeSkeleton />
 					))}
 				>
-					{data()!.map(v => (
+					{data()!.map((v) => (
 						<VideoLarge
 							title={v.title}
 							desc={v.description}

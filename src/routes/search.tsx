@@ -17,14 +17,14 @@ function Channel(props: {
 	return (
 		<A
 			href={props.url}
-			class="h-40 w-8/12 flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10"
+			class="h-40 w-8/12 flex flex-row items-center gap-4 p-4 rounded-lg hover:bg-black/10"
 		>
 			<img
-				class="rounded-full drop-shadow-2xl w-2/12 mx-8 bg-black"
+				class="rounded-full drop-shadow-2xl size-32 mx-8 bg-black"
 				src={props.avatar}
 			/>
 
-			<div class="flex flex-col w-8/12">
+			<div class="flex flex-col h-full w-8/12">
 				<div class="font-bold text-md line-clamp-2">{props.name}</div>
 
 				<div class="text-sm flex flex-row gap-2">
@@ -123,7 +123,7 @@ export default function Search() {
 						<VideoLargeSkeleton />
 					))}
 				>
-					{data()!.map(v => {
+					{data()!.map((v) => {
 						if (v.type === "video") {
 							return (
 								<VideoLarge

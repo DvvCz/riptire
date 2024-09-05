@@ -103,9 +103,9 @@ function Channel(props: {
 						<span>{`${props.vids.length}+ videos`}</span>
 					</div>
 
-					<div class="text-sm text-black/60 line-clamp-2">
+					<p class="text-sm text-black/60 line-clamp-2">
 						{props.desc}
-					</div>
+					</p>
 
 					<Show when={!subs.loading}>
 						{(() => {

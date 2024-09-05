@@ -4,7 +4,12 @@ import { createStoredSignal } from "../lib/store";
 import { getSubscriptions } from "../lib/subs";
 import { Button } from "@kobalte/core/button";
 
-const SECTIONS = ["Appearance", "Performance", "Subscriptions", "Permissions"] as const;
+const SECTIONS = [
+	"Appearance",
+	"Performance",
+	"Subscriptions",
+	"Permissions",
+] as const;
 
 export default function Settings() {
 	const [section, setSection] =
@@ -36,17 +41,18 @@ export default function Settings() {
 								"v1.theme.nav",
 								"#FFFFFF",
 							);
-							const [primColor, setPrimColor] = createStoredSignal(
-								"v1.theme.primary",
-								"#FFFFFF",
-							);
+							const [primColor, setPrimColor] =
+								createStoredSignal(
+									"v1.theme.primary",
+									"#FFFFFF",
+								);
 							const [secColor, setSecColor] = createStoredSignal(
 								"v1.theme.secondary",
 								"#000000",
 							);
 							const [terColor, setTerColor] = createStoredSignal(
 								"v1.theme.tertiary",
-								"#737373",
+								"#4F4F4F",
 							);
 
 							return (
@@ -63,9 +69,14 @@ export default function Settings() {
 												type="color"
 												class="border-none size-12 bg-transparent"
 												value={navColor()}
-												onInput={t => {
-													setNavColor(t.currentTarget.value);
-													document.documentElement.style.setProperty("--color-nav", t.currentTarget.value);
+												onInput={(t) => {
+													setNavColor(
+														t.currentTarget.value,
+													);
+													document.documentElement.style.setProperty(
+														"--color-nav",
+														t.currentTarget.value,
+													);
 												}}
 											/>
 										</div>
@@ -77,9 +88,14 @@ export default function Settings() {
 												type="color"
 												class="border-none size-12 bg-transparent"
 												value={primColor()}
-												onInput={t => {
-													setPrimColor(t.currentTarget.value);
-													document.documentElement.style.setProperty("--color-primary", t.currentTarget.value);
+												onInput={(t) => {
+													setPrimColor(
+														t.currentTarget.value,
+													);
+													document.documentElement.style.setProperty(
+														"--color-primary",
+														t.currentTarget.value,
+													);
 												}}
 											/>
 										</div>
@@ -93,9 +109,14 @@ export default function Settings() {
 												type="color"
 												class="border-none size-12 bg-transparent"
 												value={secColor()}
-												onInput={t => {
-													setSecColor(t.currentTarget.value);
-													document.documentElement.style.setProperty("--color-secondary", t.currentTarget.value);
+												onInput={(t) => {
+													setSecColor(
+														t.currentTarget.value,
+													);
+													document.documentElement.style.setProperty(
+														"--color-secondary",
+														t.currentTarget.value,
+													);
 												}}
 											/>
 										</div>
@@ -109,9 +130,14 @@ export default function Settings() {
 												type="color"
 												class="border-none size-12 bg-transparent"
 												value={terColor()}
-												onInput={t => {
-													setTerColor(t.currentTarget.value);
-													document.documentElement.style.setProperty("--color-tertiary", t.currentTarget.value);
+												onInput={(t) => {
+													setTerColor(
+														t.currentTarget.value,
+													);
+													document.documentElement.style.setProperty(
+														"--color-tertiary",
+														t.currentTarget.value,
+													);
 												}}
 											/>
 										</div>
@@ -143,38 +169,44 @@ export default function Settings() {
 						}
 
 						case "Subscriptions": {
-							const [subs] =
-								createResource(getSubscriptions);
+							const [subs] = createResource(getSubscriptions);
 
 							return (
 								<div class="flex p-8 justify-center items-center">
 									<div class="flex flex-col gap-10">
 										<div class="flex flex-col gap-4">
 											<div class="text-center font-bold text-xl">
-												Current subscriptions {!subs.loading && `(${Object.keys(subs()!).length})`}
+												Current subscriptions{" "}
+												{!subs.loading &&
+													`(${Object.keys(subs()!).length})`}
 											</div>
 
 											<Show
 												when={!subs.loading}
-												fallback={<div> Loading... </div>}
+												fallback={
+													<div> Loading... </div>
+												}
 											>
 												{(() => {
 													const data = subs()!;
 
-													const ids = Object.keys(data);
+													const ids =
+														Object.keys(data);
 													if (ids.length === 0) {
 														return (
 															<div class="text-center">
 																Nothing here.
 															</div>
-														)
+														);
 													}
 
 													return (
 														<div class="flex flex-col w-full gap-8 items-center">
 															<textarea
 																class="rounded-lg resize-none border-black drop-shadow-md outline-none p-4"
-																value={ids.join("\n")}
+																value={ids.join(
+																	"\n",
+																)}
 																rows={10}
 																cols={60}
 																readonly
@@ -183,14 +215,19 @@ export default function Settings() {
 															<div class="flex flex-row gap-8">
 																<Button
 																	class="bg-black/80 text-nowrap active:bg-black/70 py-2 px-8 text-white font-semibold rounded-lg"
-																	onClick={async () => await navigator.clipboard.writeText(ids.join("\n"))}
+																	onClick={async () =>
+																		await navigator.clipboard.writeText(
+																			ids.join(
+																				"\n",
+																			),
+																		)
+																	}
 																>
-																	Copy to clipboard
+																	Copy to
+																	clipboard
 																</Button>
 
-																<Button
-																	class="bg-black/80 text-nowrap active:bg-black/70 py-2 px-8 text-white font-semibold rounded-lg"
-																>
+																<Button class="bg-black/80 text-nowrap active:bg-black/70 py-2 px-8 text-white font-semibold rounded-lg">
 																	Import
 																</Button>
 															</div>
@@ -207,7 +244,7 @@ export default function Settings() {
 						case "Permissions": {
 							// "Family Friendly" lock w/ isFamilyFriendly
 							// Disable comments
-							return "tbd"
+							return "tbd";
 						}
 					}
 				})()}
