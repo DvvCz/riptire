@@ -37,7 +37,7 @@ This isn't some electron wrapper either, which ends up using even more RAM than 
 
 ## Note
 
-The [Invidious](https://github.com/iv-org/invidious) is great, and you should support it if possible.
+The [Invidious](https://github.com/iv-org/invidious) project is great, and you should support it if possible.
 This wouldn't be possible without the help of users [selflessly hosting Invidious instances](https://docs.invidious.io/instances).
 
 *This project is not affiliated with Invidious nor YouTube.*
