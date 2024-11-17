@@ -276,12 +276,12 @@ export default function Watch() {
 
 	const [videoData, { refetch: refetchVideoInfo }] = createResource(
 		() => searchParams.v,
-		() => getVideoInfo(searchParams.v!),
+		() => getVideoInfo(searchParams.v! as string),
 	);
 
 	const [commentData, { refetch: refetchComments }] = createResource(
 		() => searchParams.v,
-		() => getComments(searchParams.v!),
+		() => getComments(searchParams.v! as string),
 	);
 
 	const swapVideo = (id: string) => {

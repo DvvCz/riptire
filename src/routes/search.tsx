@@ -112,7 +112,7 @@ async function search(query: string) {
 
 export default function Search() {
 	const [searchParams] = useSearchParams();
-	const [data] = createResource(() => search(searchParams.q!));
+	const [data] = createResource(() => search(searchParams.q! as string));
 
 	return (
 		<div class="flex flex-col">
@@ -123,7 +123,7 @@ export default function Search() {
 						<VideoLargeSkeleton />
 					))}
 				>
-					{data()!.map(v => {
+					{data()!.map((v) => {
 						if (v.type === "video") {
 							return (
 								<VideoLarge
