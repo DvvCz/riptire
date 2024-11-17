@@ -1,2 +1,2 @@
 export const NAME = "Riptire";
-export const INSTANCE = "iv.ggtyler.dev";
+export const INSTANCE = "invidious.jing.rocks";
