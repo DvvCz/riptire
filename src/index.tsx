@@ -1,21 +1,22 @@
 /* @refresh reload */
 import { render } from "solid-js/web";
+import type { JSXElement } from "solid-js";
 import { Route, HashRouter } from "@solidjs/router";
 
 import "./index.css";
 
 import Navbar from "./components/Navbar";
 
-function Layout(props: any) {
-	const [navColor] = createStoredSignal("v1.theme.nav", "#FFFFFF");
-	const [primColor] = createStoredSignal("v1.theme.primary", "#FFFFFF");
-	const [secColor] = createStoredSignal("v1.theme.secondary", "#000000");
-	const [terColor] = createStoredSignal("v1.theme.tertiary", "#737373");
+function Layout(props: { children?: JSXElement }) {
+	const [navbarColor] = createStoredSignal("v1.theme.nav", "#FFFFFF");
+	const [primaryColor] = createStoredSignal("v1.theme.primary", "#FFFFFF");
+	const [secondaryColor] = createStoredSignal("v1.theme.secondary", "#000000");
+	const [tertiaryColor] = createStoredSignal("v1.theme.tertiary", "#737373");
 
-	document.documentElement.style.setProperty("--color-nav", navColor());
-	document.documentElement.style.setProperty("--color-primary", primColor());
-	document.documentElement.style.setProperty("--color-secondary", secColor());
-	document.documentElement.style.setProperty("--color-tertiary", terColor());
+	document.documentElement.style.setProperty("--color-nav", navbarColor());
+	document.documentElement.style.setProperty("--color-primary", primaryColor());
+	document.documentElement.style.setProperty("--color-secondary", secondaryColor());
+	document.documentElement.style.setProperty("--color-tertiary", tertiaryColor());
 
 	return (
 		<div class="h-screen overflow-y-scroll">

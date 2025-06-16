@@ -3,7 +3,7 @@ import { formatNum, formatTime, formatTimeElapsed } from "../../lib/util";
 
 export function VideoLargeSkeleton() {
 	return (
-		<div class="h-40 w-8/12 max-w-screen-2xl flex flex-row gap-4 p-4 animate-pulse">
+		<div class="h-40 w-8/12 max-w-(--breakpoint-2xl) flex flex-row gap-4 p-4 animate-pulse">
 			<div class="rounded-lg h-32 w-3/12 bg-black/20" />
 
 			<div class="flex flex-col gap-2 w-8/12">
@@ -36,7 +36,7 @@ export default function VideoLarge(props: {
 	const elapsed = Math.floor(Date.now() / 1000) - props.published;
 
 	return (
-		<A href={props.url} class="h-40 w-8/12 max-w-screen-2xl flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10">
+		<A href={props.url} class="h-40 w-8/12 max-w-(--breakpoint-2xl) flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10">
 			<div
 				style={{"background-image": `url(${props.thumb})`}}
 				class="rounded-lg bg-black drop-shadow-2xl w-56 flex justify-end items-end bg-cover"

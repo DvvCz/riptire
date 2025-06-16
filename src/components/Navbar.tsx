@@ -10,7 +10,7 @@ function Logo() {
 	return (
 		<A
 			href="/"
-			class="text-lg text-primary font-bold bg-secondary [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] rounded-lg px-4 py-2 drop-shadow-lg"
+			class="text-lg text-primary font-bold bg-secondary [text-shadow:0_1px_0_rgb(0_0_0/40%)] rounded-lg px-4 py-2 drop-shadow-lg"
 		>
 			{NAME}
 		</A>
@@ -25,21 +25,21 @@ function Search() {
 		navigate(`/search?q=${value()}`);
 	};
 
-	const keyUp = (e: any) => {
-		if (e.key == "Enter") {
+	const keyUp = (e: KeyboardEvent) => {
+		if (e.key === "Enter") {
 			performSearch();
 		}
 	};
 
 	return (
-		<div class="flex flex-row drop-shadow-lg">
+		<div class="flex flex-row drop-shadow-2xl rounded-lg shadow-lg shadow-black/30">
 			<TextField value={value()} onChange={setValue} onKeyUp={keyUp}>
-				<TextField.Input class="rounded-l-lg px-4 py-2 outline-none" />
+				<TextField.Input class="rounded-l-lg px-4 py-2 outline-hidden shadow-inner" />
 			</TextField>
 
 			<Button
 				onClick={performSearch}
-				class="rounded-r-lg bg-secondary px-6 py-2 text-xl text-white"
+				class="rounded-r-lg bg-secondary px-6 py-2 text-xl hover:cursor-pointer text-white shadow-md"
 			>
 				<IoSearch />
 			</Button>
@@ -51,7 +51,7 @@ function Anchor(props: { href: string; children: JSX.Element }) {
 	return (
 		<A
 			href={props.href}
-			class="hover:border-b-4 transition-all duration-75 border-b-tertiary flex items-center h-full px-8"
+			class="hover:border-b-4 transition-all duration-75 border-b-secondary flex items-center h-full px-8"
 		>
 			{props.children}
 		</A>

@@ -1,10 +1,38 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer base {
-  :root {
-    --color-primary: tomato;
-    --color-secondary: black;
+@theme {
+  --color-primary: var(--color-primary, tomato);
+  --color-secondary: var(--color-secondary, black);
+  --color-tertiary: var(--color-tertiary, #737373);
+  --color-nav: var(--color-nav, white);
+}
+
+@layer utilities {
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+
+  .bg-tertiary {
+    background-color: var(--color-tertiary);
+  }
+
+  .bg-nav {
+    background-color: var(--color-nav);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+
+  .text-tertiary {
+    color: var(--color-tertiary);
   }
 }

@@ -1,18 +1,11 @@
 import { useSearchParams } from "@solidjs/router";
-import VideoSmall, {
-	VideoSmallSkeleton,
-} from "../components/videos/VideoSmall";
+import VideoSmall, { VideoSmallSkeleton } from "../components/videos/VideoSmall";
 
 import { INSTANCE } from "../lib/info";
 import { createResource, createSignal } from "solid-js";
 import { Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
-import {
-	IoShare,
-	IoThumbsDown,
-	IoThumbsUp,
-	IoThumbsUpOutline,
-} from "solid-icons/io";
+import { IoShare, IoThumbsDown, IoThumbsUp, IoThumbsUpOutline } from "solid-icons/io";
 import { Separator } from "@kobalte/core/separator";
 
 import { formatNum, formatTimeElapsed } from "../lib/util";
@@ -59,32 +52,20 @@ function VideoInfo(props: {
 			<div class="font-bold text-lg line-clamp-1">{props.title}</div>
 
 			<div class="flex flex-row gap-4">
-				<a
-					href={props.authorUrl}
-					class="flex flex-row gap-2 w-1/4 rounded-full h-1/3"
-				>
-					<img
-						src={props.authorAvatar}
-						class="rounded-full drop-shadow-md size-10"
-					/>
+				<a href={props.authorUrl} class="flex flex-row gap-2 w-1/4 rounded-full h-1/3">
+					<img src={props.authorAvatar} alt="author avatar" class="rounded-full drop-shadow-md size-10" />
 
 					<div class="flex flex-col">
-						<div class="font-semibold line-clamp-1">
-							{props.author}
-						</div>
+						<div class="font-semibold line-clamp-1">{props.author}</div>
 
-						<div class="text-xs text-black/50">
-							{`${props.subs} subscribers`}
-						</div>
+						<div class="text-xs text-black/50">{`${props.subs} subscribers`}</div>
 					</div>
 				</a>
 
 				<Show
 					when={!subs.loading}
 					fallback={
-						<Button class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8">
-							Subscribe
-						</Button>
+						<Button class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8">Subscribe</Button>
 					}
 				>
 					{(() => {
@@ -92,10 +73,7 @@ function VideoInfo(props: {
 							return (
 								<Button
 									onClick={async () => {
-										await setSubscribed(
-											props.authorId,
-											false,
-										);
+										await setSubscribed(props.authorId, false);
 										refetch();
 									}}
 									class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
@@ -103,22 +81,19 @@ function VideoInfo(props: {
 									Subscribed
 								</Button>
 							);
-						} else {
-							return (
-								<Button
-									onClick={async () => {
-										await setSubscribed(
-											props.authorId,
-											true,
-										);
-										refetch();
-									}}
-									class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
-								>
-									Subscribe
-								</Button>
-							);
 						}
+
+						return (
+							<Button
+								onClick={async () => {
+									await setSubscribed(props.authorId, true);
+									refetch();
+								}}
+								class="rounded-full bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
+							>
+								Subscribe
+							</Button>
+						);
 					})()}
 				</Show>
 
@@ -127,10 +102,7 @@ function VideoInfo(props: {
 						<IoThumbsUp class="text-xl" /> {formatNum(props.likes)}
 					</Button>
 					{/* todo: due to a ?bug?, separator has a white pixel at the top. so can't be any other color. */}
-					<Separator
-						class="bg-white h-2/3 w-px"
-						orientation="vertical"
-					/>
+					<Separator class="bg-white h-2/3 w-px" orientation="vertical" />
 					<Button class="rounded-r-full flex h-full items-center px-4 hover:bg-tertiary/90">
 						<IoThumbsDown class="text-xl" />
 					</Button>
@@ -149,15 +121,9 @@ function VideoInfo(props: {
 				</div>
 
 				<div class="mb-4 flex flex-col">
-					<div
-						class={`${!showDescription() ? "line-clamp-2" : ""} text-sm`}
-					>
-						{props.description}
-					</div>
+					<div class={`${!showDescription() ? "line-clamp-2" : ""} text-sm`}>{props.description}</div>
 
-					<Button onClick={() => setShowDescription((t) => !t)}>
-						{showDescription() ? "Show less" : "Show more"}
-					</Button>
+					<Button onClick={() => setShowDescription((t) => !t)}>{showDescription() ? "Show less" : "Show more"}</Button>
 				</div>
 			</div>
 		</div>
@@ -190,6 +156,8 @@ async function getVideoInfo(id: string) {
 			title: string;
 			author: string;
 			videoId: string;
+			lengthSeconds: number;
+			viewCount: number;
 			viewCountText: string;
 			videoThumbnails: { url: string }[];
 		}[];
@@ -226,18 +194,13 @@ function Comment(props: {
 
 	return (
 		<div class="flex flex-row gap-4">
-			<img
-				src={props.avatar}
-				class="rounded-full drop-shadow-md object-cover size-10"
-			/>
+			<img src={props.avatar} alt="avatar" class="rounded-full drop-shadow-md object-cover size-10" />
 
 			<div class="flex flex-col gap-1">
 				<div class="flex flex-row gap-4">
 					<div class="text-xs font-semibold">{props.author}</div>
 
-					<div class="text-xs text-black/50">
-						{formatTimeElapsed(elapsed)}
-					</div>
+					<div class="text-xs text-black/50">{formatTimeElapsed(elapsed)}</div>
 				</div>
 
 				<div class="text-sm">{props.content}</div>
@@ -254,7 +217,7 @@ function Comment(props: {
 async function getComments(id: string) {
 	const res = await fetch(`https://${INSTANCE}/api/v1/comments/${id}`);
 	if (!res.ok) {
-		return <div>Failed to load</div>;
+		throw "Failed to fetch comments";
 	}
 
 	const json: {
@@ -293,21 +256,12 @@ export default function Watch() {
 	return (
 		<div class="p-8 flex flex-row justify-center gap-2">
 			<div class="flex flex-col w-8/12 max-w-6xl gap-4 h-full rounded-lg">
-				<video
-					class="outline-none rounded-lg bg-black/80 drop-shadow-xl"
-					controls
-					autoplay
-				>
-					<source
-						src={`https://${INSTANCE}/latest_version?id=${searchParams.v!}&itag=18`}
-						type="video/mp4"
-					/>
+				<video class="outline-hidden rounded-lg bg-black/80 drop-shadow-xl" controls autoplay>
+					<source src={`https://${INSTANCE}/latest_version?id=${searchParams.v!}&itag=18`} type="video/mp4" />
+					<track kind="captions" src="" lang="en" label="English captions" />
 				</video>
 
-				<Show
-					when={!videoData.loading}
-					fallback={<VideoInfoSkeleton />}
-				>
+				<Show when={!videoData.loading} fallback={<VideoInfoSkeleton />}>
 					{(() => {
 						const json = videoData()!;
 						return (
@@ -330,20 +284,15 @@ export default function Watch() {
 				<div class="flex flex-col gap-12 min-h-96 rounded-xl">
 					<div class="text-lg font-bold">
 						<Show when={!commentData.loading} fallback={"Comments"}>
-							{`${(commentData() as any).commentCount} Comments`}
+							{`${commentData()!.commentCount} Comments`}
 						</Show>
 					</div>
 
 					<div class="flex flex-col gap-6">
-						<Show
-							when={!commentData.loading}
-							fallback={[1, 2, 3, 4, 5, 6].map((_) => (
-								<CommentSkeleton />
-							))}
-						>
+						<Show when={!commentData.loading} fallback={[1, 2, 3, 4, 5, 6].map((_) => <CommentSkeleton />)}>
 							{(() => {
-								const json = commentData() as any;
-								return json.comments.map((c: any) => (
+								const json = commentData()!;
+								return json.comments.map((c) => (
 									<Comment
 										author={c.author}
 										content={c.content}
@@ -359,20 +308,15 @@ export default function Watch() {
 			</div>
 
 			<div class="rounded-lg w-4/12 max-w-3xl flex flex-col gap-2 p-8">
-				<Show
-					when={!videoData.loading}
-					fallback={[1, 2, 3, 4, 5, 6].map(() => (
-						<VideoSmallSkeleton />
-					))}
-				>
+				<Show when={!videoData.loading} fallback={[1, 2, 3, 4, 5, 6].map(() => <VideoSmallSkeleton />)}>
 					{(() => {
-						const json = videoData() as any;
-						return json.recommendedVideos.map((v: any) => (
+						const json = videoData()!;
+						return json.recommendedVideos.map((v) => (
 							<VideoSmall
 								onClick={() => swapVideo(v.videoId)}
 								title={v.title}
 								author={v.author}
-								views={v.viewCountText}
+								views={v.viewCount}
 								thumb={v.videoThumbnails[0].url}
 								url={`/watch?v=${v.videoId}`}
 								duration={v.lengthSeconds}

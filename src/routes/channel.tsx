@@ -1,10 +1,7 @@
 import { useParams } from "@solidjs/router";
 import { createResource, Show } from "solid-js";
 import { INSTANCE } from "../lib/info";
-import {
-	VideoMedium,
-	VideoMediumSkeleton,
-} from "../components/videos/VideoMedium";
+import { VideoMedium, VideoMediumSkeleton } from "../components/videos/VideoMedium";
 import { formatNum } from "../lib/util";
 import { Button } from "@kobalte/core/button";
 import { getSubscriptions, setSubscribed } from "../lib/subs";
@@ -80,19 +77,14 @@ function Channel(props: {
 		published: number;
 	}[];
 }) {
-	const [subs, { refetch }] = createResource(
-		async () => await getSubscriptions(),
-	);
+	const [subs, { refetch }] = createResource(async () => await getSubscriptions());
 
 	return (
 		<div class="flex flex-col gap-6 px-32 py-4">
-			<img src={props.banner} class="rounded-xl h-48 w-full" />
+			<img src={props.banner} alt="banner" class="rounded-xl h-48 w-full" />
 
 			<div class="flex flex-row gap-4 w-full">
-				<img
-					src={props.avatar}
-					class="rounded-full size-40 object-cover"
-				/>
+				<img src={props.avatar} alt="avatar" class="rounded-full size-40 object-cover" />
 
 				<div class="flex flex-col gap-2 w-5/6">
 					<div class="text-4xl font-bold w-1/3">{props.name}</div>
@@ -103,9 +95,7 @@ function Channel(props: {
 						<span>{`${props.vids.length}+ videos`}</span>
 					</div>
 
-					<div class="text-sm text-black/60 line-clamp-2">
-						{props.desc}
-					</div>
+					<div class="text-sm text-black/60 line-clamp-2">{props.desc}</div>
 
 					<Show when={!subs.loading}>
 						{(() => {
@@ -113,10 +103,7 @@ function Channel(props: {
 								return (
 									<Button
 										onClick={async () => {
-											await setSubscribed(
-												props.id,
-												false,
-											);
+											await setSubscribed(props.id, false);
 											refetch();
 										}}
 										class="rounded-full w-36 py-3 bg-secondary hover:bg-secondary/90 text-white px-8"
@@ -124,19 +111,19 @@ function Channel(props: {
 										Subscribed
 									</Button>
 								);
-							} else {
-								return (
-									<Button
-										onClick={async () => {
-											await setSubscribed(props.id, true);
-											refetch();
-										}}
-										class="rounded-full w-36 py-3 bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
-									>
-										Subscribe
-									</Button>
-								);
 							}
+
+							return (
+								<Button
+									onClick={async () => {
+										await setSubscribed(props.id, true);
+										refetch();
+									}}
+									class="rounded-full w-36 py-3 bg-neutral-800 hover:bg-neutral-800/90 text-white px-8"
+								>
+									Subscribe
+								</Button>
+							);
 						})()}
 					</Show>
 				</div>
@@ -177,11 +164,7 @@ export default function Channels() {
 						desc={channelData.description}
 						subs={channelData.subCount}
 						banner={channelData.authorBanners?.[0]?.url}
-						avatar={
-							channelData.authorThumbnails[
-								channelData.authorThumbnails.length - 1
-							].url
-						}
+						avatar={channelData.authorThumbnails[channelData.authorThumbnails.length - 1].url}
 						vids={channelData.latestVideos.map((v) => ({
 							name: v.title,
 							id: v.videoId,

@@ -1,7 +1,5 @@
 import { createResource, Show } from "solid-js";
-import VideoLarge, {
-	VideoLargeSkeleton,
-} from "../components/videos/VideoLarge";
+import VideoLarge, { VideoLargeSkeleton } from "../components/videos/VideoLarge";
 import { A, useSearchParams } from "@solidjs/router";
 
 import { formatNum } from "../lib/util";
@@ -15,14 +13,8 @@ function Channel(props: {
 	url: string;
 }) {
 	return (
-		<A
-			href={props.url}
-			class="h-40 w-8/12 flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10"
-		>
-			<img
-				class="rounded-full drop-shadow-2xl w-2/12 mx-8 bg-black"
-				src={props.avatar}
-			/>
+		<A href={props.url} class="h-40 w-8/12 flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10">
+			<img class="rounded-full drop-shadow-2xl w-2/12 mx-8 bg-black" src={props.avatar} alt="avatar" />
 
 			<div class="flex flex-col w-8/12">
 				<div class="font-bold text-md line-clamp-2">{props.name}</div>
@@ -45,10 +37,7 @@ function Playlist(props: {
 	url: string;
 }) {
 	return (
-		<A
-			href={props.url}
-			class="h-40 w-8/12 flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10"
-		>
+		<A href={props.url} class="h-40 w-8/12 flex flex-row gap-4 p-4 rounded-lg hover:bg-black/10">
 			<div
 				style={{ "background-image": `url(${props.thumb})` }}
 				class="rounded-lg drop-shadow-2xl flex flex-row w-4/12 bg-red-500 bg-cover"
@@ -76,7 +65,7 @@ async function search(query: string) {
 		throw new Error("uh oh");
 	}
 
-	let json: (
+	const json: (
 		| {
 				type: "video";
 				title: string;
@@ -117,12 +106,7 @@ export default function Search() {
 	return (
 		<div class="flex flex-col">
 			<div class="p-8 px-12 flex flex-col gap-2">
-				<Show
-					when={!data.loading}
-					fallback={[1, 2, 3, 4, 5].map((_) => (
-						<VideoLargeSkeleton />
-					))}
-				>
+				<Show when={!data.loading} fallback={[1, 2, 3, 4, 5].map((_) => <VideoLargeSkeleton />)}>
 					{data()!.map((v) => {
 						if (v.type === "video") {
 							return (
@@ -138,7 +122,9 @@ export default function Search() {
 									duration={v.lengthSeconds}
 								/>
 							);
-						} else if (v.type === "channel") {
+						}
+
+						if (v.type === "channel") {
 							return (
 								<Channel
 									name={v.author}
@@ -148,17 +134,17 @@ export default function Search() {
 									url={`/channel/${v.authorId}`}
 								/>
 							);
-						} else {
-							return (
-								<Playlist
-									title={v.title}
-									author={v.author}
-									thumb={v.playlistThumbnail}
-									vids={v.videoCount}
-									url={`/playlists?id=${v.playlistId}`}
-								/>
-							);
 						}
+
+						return (
+							<Playlist
+								title={v.title}
+								author={v.author}
+								thumb={v.playlistThumbnail}
+								vids={v.videoCount}
+								url={`/playlists?id=${v.playlistId}`}
+							/>
+						);
 					})}
 				</Show>
 			</div>

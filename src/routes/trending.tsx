@@ -1,15 +1,13 @@
 import { Button } from "@kobalte/core/button";
 import { createResource, createSignal, Show } from "solid-js";
-import VideoLarge, {
-	VideoLargeSkeleton,
-} from "../components/videos/VideoLarge";
+import VideoLarge, { VideoLargeSkeleton } from "../components/videos/VideoLarge";
 
 import { INSTANCE } from "../lib/info";
 
 const MODES = ["Now", "Music", "Gaming", "Movies"] as const;
 
 async function search(mode: (typeof MODES)[number]) {
-	let m = {
+	const m = {
 		Now: "default",
 		Music: "music",
 		Gaming: "gaming",
@@ -43,7 +41,7 @@ export default function Trending() {
 	return (
 		<div class="flex flex-col w-full items-center">
 			<div class="border-b border-b-black/50 items-center flex flex-col gap-4 pt-8 px-8 w-full">
-				<div class="flex flex-col gap-4 max-w-screen-2xl w-full">
+				<div class="flex flex-col gap-4 max-w-(--breakpoint-2xl) w-full">
 					<div class="text-4xl font-bold">Trending</div>
 
 					<div class="flex flex-row h-12">
@@ -54,7 +52,7 @@ export default function Trending() {
 										setMode(m);
 										refetch();
 									}}
-									class={`${m === mode() && "border-b-black border-b-2"} hover:border-b-2 transition-all duration-100 border-b-neutral-500 flex items-center h-full px-8`}
+									class={`${m === mode() && "border-b-black border-b-2"} hover:border-b-2 transition-all duration-100 border-b-secondary flex items-center h-full px-8`}
 								>
 									{m}
 								</Button>
@@ -64,14 +62,9 @@ export default function Trending() {
 				</div>
 			</div>
 
-			<div class="p-8 px-12 flex w-full flex-col max-w-screen-2xl gap-2">
-				<Show
-					when={!data.loading}
-					fallback={[1, 2, 3, 4, 5].map((_) => (
-						<VideoLargeSkeleton />
-					))}
-				>
-					{data()!.map(v => (
+			<div class="p-8 px-12 flex w-full flex-col max-w-(--breakpoint-2xl) gap-2">
+				<Show when={!data.loading} fallback={[1, 2, 3, 4, 5].map((_) => <VideoLargeSkeleton />)}>
+					{data()!.map((v) => (
 						<VideoLarge
 							title={v.title}
 							desc={v.description}
