@@ -1,13 +1,13 @@
 import { useParams } from "@solidjs/router";
 import { createResource, Show } from "solid-js";
-import { INSTANCE } from "../lib/info";
+import { getInstanceUrl } from "../lib/info";
 import { VideoMedium, VideoMediumSkeleton } from "../components/videos/VideoMedium";
 import { formatNum } from "../lib/util";
 import { Button } from "@kobalte/core/button";
 import { getSubscriptions, setSubscribed } from "../lib/subs";
 
 async function getChannelInfo(id: string) {
-	const res = await fetch(`https://${INSTANCE}/api/v1/channels/${id}`);
+	const res = await fetch(`${getInstanceUrl()}/api/v1/channels/${id}`);
 	if (!res.ok) throw "uh oh";
 
 	const json: {

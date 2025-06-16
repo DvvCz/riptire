@@ -3,7 +3,7 @@ import VideoLarge, { VideoLargeSkeleton } from "../components/videos/VideoLarge"
 import { A, useSearchParams } from "@solidjs/router";
 
 import { formatNum } from "../lib/util";
-import { INSTANCE } from "../lib/info";
+import { getInstanceUrl } from "../lib/info";
 
 function Channel(props: {
 	name: string;
@@ -60,7 +60,7 @@ function Playlist(props: {
 }
 
 async function search(query: string) {
-	const res = await fetch(`https://${INSTANCE}/api/v1/search?q=${query}`);
+	const res = await fetch(`${getInstanceUrl()}/api/v1/search?q=${query}`);
 	if (!res.ok) {
 		throw new Error("uh oh");
 	}

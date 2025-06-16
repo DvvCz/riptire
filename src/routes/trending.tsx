@@ -2,7 +2,7 @@ import { Button } from "@kobalte/core/button";
 import { createResource, createSignal, Show } from "solid-js";
 import VideoLarge, { VideoLargeSkeleton } from "../components/videos/VideoLarge";
 
-import { INSTANCE } from "../lib/info";
+import { getInstanceUrl } from "../lib/info";
 
 const MODES = ["Now", "Music", "Gaming", "Movies"] as const;
 
@@ -14,7 +14,7 @@ async function search(mode: (typeof MODES)[number]) {
 		Movies: "movies",
 	}[mode];
 
-	const res = await fetch(`https://${INSTANCE}/api/v1/trending?type=${m}`);
+	const res = await fetch(`${getInstanceUrl()}/api/v1/trending?type=${m}`);
 	if (!res.ok) {
 		throw new Error("Uh oh");
 	}

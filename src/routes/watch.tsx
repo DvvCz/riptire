@@ -1,7 +1,7 @@
 import { useSearchParams } from "@solidjs/router";
 import VideoSmall, { VideoSmallSkeleton } from "../components/videos/VideoSmall";
 
-import { INSTANCE } from "../lib/info";
+import { getInstanceUrl } from "../lib/info";
 import { createResource, createSignal } from "solid-js";
 import { Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
@@ -131,7 +131,7 @@ function VideoInfo(props: {
 }
 
 async function getVideoInfo(id: string) {
-	const res = await fetch(`https://${INSTANCE}/api/v1/videos/${id}`);
+	const res = await fetch(`${getInstanceUrl()}/api/v1/videos/${id}`);
 	if (!res.ok) {
 		throw "Uh oh";
 	}
@@ -215,7 +215,7 @@ function Comment(props: {
 }
 
 async function getComments(id: string) {
-	const res = await fetch(`https://${INSTANCE}/api/v1/comments/${id}`);
+	const res = await fetch(`${getInstanceUrl()}/api/v1/comments/${id}`);
 	if (!res.ok) {
 		throw "Failed to fetch comments";
 	}
@@ -257,7 +257,7 @@ export default function Watch() {
 		<div class="p-8 flex flex-row justify-center gap-2">
 			<div class="flex flex-col w-8/12 max-w-6xl gap-4 h-full rounded-lg">
 				<video class="outline-hidden rounded-lg bg-black/80 drop-shadow-xl" controls autoplay>
-					<source src={`https://${INSTANCE}/latest_version?id=${searchParams.v!}&itag=18`} type="video/mp4" />
+					<source src={`${getInstanceUrl()}/latest_version?id=${searchParams.v!}&itag=18`} type="video/mp4" />
 					<track kind="captions" src="" lang="en" label="English captions" />
 				</video>
 

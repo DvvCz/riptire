@@ -14,7 +14,7 @@ export function VideoMediumSkeleton() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
 
 export function VideoMedium(props: {
@@ -36,21 +36,15 @@ export function VideoMedium(props: {
 					{formatTime(props.duration)}
 				</div>
 
-				<img src={props.thumb} class="bg-black rounded-xl h-32 object-cover" />
+				<img alt="thumb" src={props.thumb} class="bg-black rounded-xl h-32 object-cover" />
 			</div>
 
 			<div class="flex flex-col gap-1 pb-4">
-				<div class="text-md line-clamp-2 font-semibold pr-4">
-					{props.title}
-				</div>
+				<div class="text-md line-clamp-2 font-semibold pr-4">{props.title}</div>
 
 				{(() => {
 					if (props.author) {
-						return (
-							<div class="text-sm text-black/80">
-								{props.author}
-							</div>
-						)
+						return <div class="text-sm text-black/80">{props.author}</div>;
 					}
 				})()}
 
